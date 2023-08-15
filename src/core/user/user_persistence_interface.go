@@ -1,6 +1,8 @@
 package user
 
+import "sync"
+
 type IUserPersistence interface {
-	Create(data *User)
+	Create(data *User, waitGroup *sync.WaitGroup)
 	GetByUserNameOrNil(userName string) *User
 }

@@ -2,15 +2,18 @@ package postgres
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/ortegasixto7/go-bank-api/src/core/user"
 )
 
 type PostgresUserPersistence struct{}
 
-func (this PostgresUserPersistence) Create(data *user.User) {
+func (this PostgresUserPersistence) Create(data *user.User, waitGroup *sync.WaitGroup) {
 
-	fmt.Printf("%v \n", Database)
+	if waitGroup != nil {
+		defer waitGroup.Done()
+	}
 
 	result := Database.Create(&data)
 	if result.Error != nil {

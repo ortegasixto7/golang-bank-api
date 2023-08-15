@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/ortegasixto7/go-bank-api/src/core/user/usecases/signup"
+	"github.com/ortegasixto7/go-bank-api/src/external/auth"
 	"github.com/ortegasixto7/go-bank-api/src/persistence/postgres"
 )
 
@@ -16,6 +17,8 @@ func main() {
 	signUpRequest.Password = "123456"
 	postgres.Init()
 
-	signup.Execute(signUpRequest, new(postgres.PostgresUserPersistence))
+	signup.Execute(signUpRequest,
+		new(postgres.PostgresUserPersistence),
+		auth.AuthService{AuthPersistence: new(postgres.PostgresAuthPersistence)})
 
 }

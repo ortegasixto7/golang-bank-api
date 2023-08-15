@@ -6,3 +6,7 @@ type Auth struct {
 	Password  string
 	CreatedAt int64
 }
+
+func (Auth) TableName() string {
+	return "auth"
+}
