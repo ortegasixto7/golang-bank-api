@@ -6,14 +6,14 @@ type AuthService struct {
 	AuthPersistence IAuthPersistence
 }
 
-func (this AuthService) Create(data *Auth, waitGroup *sync.WaitGroup) {
+func (this *AuthService) Create(data *Auth, waitGroup *sync.WaitGroup) {
 	this.AuthPersistence.Create(data, waitGroup)
 }
 
-func (this AuthService) Update(data *Auth) {
+func (this *AuthService) Update(data *Auth) {
 	this.AuthPersistence.Update(data)
 }
 
-func (this AuthService) GetByUserNameOrNil(userName string) *Auth {
+func (this *AuthService) GetByUserNameOrNil(userName string) *Auth {
 	return nil
 }

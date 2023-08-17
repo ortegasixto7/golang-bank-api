@@ -9,7 +9,7 @@ import (
 
 type PostgresAuthPersistence struct{}
 
-func (this PostgresAuthPersistence) Create(data *auth.Auth, waitGroup *sync.WaitGroup) {
+func (this *PostgresAuthPersistence) Create(data *auth.Auth, waitGroup *sync.WaitGroup) {
 	if waitGroup != nil {
 		defer waitGroup.Done()
 	}
@@ -24,13 +24,13 @@ func (this PostgresAuthPersistence) Create(data *auth.Auth, waitGroup *sync.Wait
 	}
 }
 
-func (this PostgresAuthPersistence) Update(data *auth.Auth) {
+func (this *PostgresAuthPersistence) Update(data *auth.Auth) {
 	result := Database.Create(&data)
 	if result.Error != nil {
 		fmt.Println(result.Error)
 	}
 }
 
-func (this PostgresAuthPersistence) GetByUserNameOrNil(userName string) *auth.Auth {
+func (this *PostgresAuthPersistence) GetByUserNameOrNil(userName string) *auth.Auth {
 	return nil
 }

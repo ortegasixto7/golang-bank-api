@@ -9,7 +9,7 @@ import (
 
 type PostgresUserPersistence struct{}
 
-func (this PostgresUserPersistence) Create(data *user.User, waitGroup *sync.WaitGroup) {
+func (this *PostgresUserPersistence) Create(data *user.User, waitGroup *sync.WaitGroup) {
 
 	if waitGroup != nil {
 		defer waitGroup.Done()
@@ -25,6 +25,6 @@ func (this PostgresUserPersistence) Create(data *user.User, waitGroup *sync.Wait
 	}
 }
 
-func (this PostgresUserPersistence) GetByUserNameOrNil(userName string) *user.User {
+func (this *PostgresUserPersistence) GetByUserNameOrNil(userName string) *user.User {
 	return nil
 }
