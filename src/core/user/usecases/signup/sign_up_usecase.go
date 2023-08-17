@@ -8,14 +8,17 @@ import (
 	"github.com/google/uuid"
 	"github.com/ortegasixto7/go-bank-api/src/core/user"
 	"github.com/ortegasixto7/go-bank-api/src/external/auth"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Execute(request *SignUpRequest, userPersistence user.IUserPersistence, authService auth.AuthService) {
 
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(request.Password), 14)
+
 	var auth auth.Auth
 	auth.Id = uuid.NewString()
 	auth.UserName = request.UserName
-	auth.Password = request.Password
+	auth.Password = string(hashedPassword)
 	auth.CreatedAt = time.Now().UnixMilli()
 
 	var user user.User
