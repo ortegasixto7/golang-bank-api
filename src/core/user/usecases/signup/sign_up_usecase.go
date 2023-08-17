@@ -2,18 +2,18 @@ package signup
 
 import (
 	"fmt"
-	"strconv"
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ortegasixto7/go-bank-api/src/core/user"
 	"github.com/ortegasixto7/go-bank-api/src/external/auth"
 )
 
-func Execute(request SignUpRequest, userPersistence user.IUserPersistence, authService auth.AuthService) {
+func Execute(request *SignUpRequest, userPersistence user.IUserPersistence, authService auth.AuthService) {
 
 	var auth auth.Auth
-	auth.Id = strconv.FormatInt(time.Now().UnixMilli(), 10)
+	auth.Id = uuid.NewString()
 	auth.UserName = request.UserName
 	auth.Password = request.Password
 	auth.CreatedAt = time.Now().UnixMilli()
