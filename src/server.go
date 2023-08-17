@@ -1,24 +1,29 @@
 package main
 
 import (
-	"fmt"
+	"github.com/goccy/go-json"
 
-	"github.com/ortegasixto7/go-bank-api/src/core/user/usecases/signup"
-	"github.com/ortegasixto7/go-bank-api/src/external/auth"
+	"github.com/gofiber/fiber/v2"
+	"github.com/ortegasixto7/go-bank-api/src/controllers"
 	"github.com/ortegasixto7/go-bank-api/src/persistence/postgres"
 )
 
 func main() {
-	fmt.Println("\n\n\nHello World")
-	var signUpRequest signup.SignUpRequest
-	signUpRequest.FirstName = "Sixto"
-	signUpRequest.LastName = "Ortega"
-	signUpRequest.UserName = "ortegasixto7"
-	signUpRequest.Password = "123456"
 	postgres.Init()
+	var userController controllers.UserController
+	app := fiber.New(fiber.Config{
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
+	})
 
-	signup.Execute(signUpRequest,
-		new(postgres.PostgresUserPersistence),
-		auth.AuthService{AuthPersistence: new(postgres.PostgresAuthPersistence)})
+	app.Get("/", func(c *fiber.Ctx) error {
+		var data = make(map[string]string)
+		data["message"] = "Hello world!!"
+		return c.JSON(data)
+	})
+
+	app.Post("/users/sign-up/v1", userController.SignUp)
+
+	app.Listen(":3000")
 
 }
