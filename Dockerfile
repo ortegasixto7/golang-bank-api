@@ -1,17 +1,8 @@
 FROM golang:1.20-alpine
-
 WORKDIR /app
-
-COPY go.mod ./
-COPY go.sum ./
+COPY go.mod .
 RUN go mod download
-
-COPY ./ ./
-
-WORKDIR /app/src
-
-RUN go build -o /go-bank-api
-
+COPY . .
+RUN go build -o /dist
 EXPOSE 8005
-
-CMD [ "/go-bank-api" ]
+CMD [ "/dist" ]
