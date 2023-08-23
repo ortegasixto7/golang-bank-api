@@ -9,7 +9,7 @@ import (
 )
 
 type UserController struct {
-	UserPersistence *user.IUserPersistence
+	UserPersistence *user.UserPersistence
 	AuthService     *auth.AuthService
 }
 
@@ -20,7 +20,10 @@ func (this *UserController) SignUp(c *fiber.Ctx) error {
 		return err
 	}
 
-	signup.Execute(request, new(postgres.PostgresUserPersistence), &auth.AuthService{AuthPersistence: new(postgres.PostgresAuthPersistence)})
+	err := signup.Execute(request, new(postgres.PostgresUserPersistence), &auth.AuthService{AuthPersistence: new(postgres.PostgresAuthPersistence)})
+	if err != nil {
+		return err
+	}
 
 	c.Response().BodyWriter().Write([]byte(""))
 	return nil
