@@ -15,5 +15,5 @@ func (this *AuthService) Update(data *Auth) {
 }
 
 func (this *AuthService) GetByUserNameOrNil(userName string) *Auth {
-	return nil
+	return this.AuthPersistence.GetByUserNameOrNil(userName)
 }

@@ -32,5 +32,10 @@ func (this *PostgresAuthPersistence) Update(data *auth.Auth) {
 }
 
 func (this *PostgresAuthPersistence) GetByUserNameOrNil(userName string) *auth.Auth {
-	return nil
+	var result *auth.Auth
+	Database.Where(&auth.Auth{UserName: userName}).First(&result)
+	if result.Id == "" {
+		return nil
+	}
+	return result
 }
